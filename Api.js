@@ -36,10 +36,6 @@ db.connect((err) => {
   else console.log('Connected to MySQL database.'); // Success message
 });
 
-// Default route for testing server functionality
-app.get('/', (req, res) => {
-  res.send('Hello, ExpressAPI with MySQL!');
-});
 
 // Email transport configuration
 // Hardcoded credentials should be replaced with environment variables
@@ -485,9 +481,9 @@ app.post('/api/tier/seller/giveRetract', async (req, res) => {
 
 
 
-app.get('/api/information/get', async (req, res) => {
+app.get('/api/information/get/:email', async (req, res) => {
   try {
-    const { email } = req.body; // Get the email from the user
+    const { email } = req.params; // Get the email from the user
 
     // Email validation
     if (!email) {
@@ -750,8 +746,8 @@ app.put('/api/category/update', async (req, res) => {
 });
 
 // GET endpoint to retrieve a category
-app.get('/api/category/get', async (req, res) => {
-  const { name } = req.body;
+app.get('/api/category/get/:name', async (req, res) => {
+  const { name } = req.params;
 
   // Validate the request body using Joi schema
   const schema = Joi.object({
@@ -917,9 +913,9 @@ app.post('/api/cart/add', async (req, res) => {
 });
 
 // Endpoint to fetch a customer's cart or a specific order from the cart
-app.get('/api/cart/get/oneAll', async (req, res) => {
+app.get('/api/cart/get/oneAll/:idcustomer/:idorder/:purpose', async (req, res) => {
   // Destructuring the values from the request body
-  const { idcustomer, idorder, purpose } = req.body;
+  const { idcustomer, idorder, purpose } = req.params;
 
   // Validate the request body with Joi
   const schema = Joi.object({
@@ -1439,8 +1435,8 @@ app.post('/api/product/add', async (req, res) => {
 });
 
 // Route to fetch a product by its ID
-app.get('/api/product/get', async (req, res) => {
-  const { productId } = req.body;
+app.get('/api/product/get/:productId', async (req, res) => {
+  const { productId } = req.params;
 
   // Validate the productId in the request body
   const schema = Joi.object({
@@ -1697,8 +1693,8 @@ app.post('/api/order/add', async (req, res) => {
   }
 });
 
-app.get('/api/order/get/oneAll', async (req, res) => {
-  const { customerId, orderId, purpose } = req.body;
+app.get('/api/order/get/oneAll/:customerId/:orderId/:purpose', async (req, res) => {
+  const { customerId, orderId, purpose } = req.params;
 
   // Conditional validation with a single Joi schema
   const schema = Joi.object({
@@ -2284,8 +2280,8 @@ app.post('/api/pay', async (req, res) => {
 
 
 // Define a GET route to retrieve receipts for a specific customer
-app.get('/api/receipt/get', async (req, res) => {
-  const { idcustomer } = req.body;
+app.get('/api/receipt/get/:idcustomer', async (req, res) => {
+  const { idcustomer } = req.params;
 
   // Validation schema for the incoming request data
   const schema = Joi.object({
@@ -2391,8 +2387,8 @@ app.post('/api/return/demand/add', async (req, res) => {
 });
 
 // Route to retrieve one or all return demands
-app.get('/api/return/demand/get/oneAll', async (req, res) => {
-  const { customerId, orderId, purpose, status } = req.body;
+app.get('/api/return/demand/get/oneAll/:customerId/:orderId/:purpose/:status', async (req, res) => {
+  const { customerId, orderId, purpose, status } = req.params;
 
   // Validate input with Joi
   const schema = Joi.object({
@@ -2721,8 +2717,8 @@ app.post('/api/comment/addAndUptade', async (req, res) => {
 });
 
 // Retrieve comments for a product based on purpose (one or all)
-app.get('/api/comment/get/oneAll', async (req, res) => {
-  const { idcustomer, idproduct, purpose } = req.body;
+app.get('/api/comment/get/oneAll/:idcustomer/:idproduct/:purpose', async (req, res) => {
+  const { idcustomer, idproduct, purpose } = req.params;
 
   // Validate the request body
   const schema = Joi.object({
@@ -2977,8 +2973,8 @@ app.post('/api/promotionCode/addAndUpdate', async (req, res) => {
 });
 
 // Endpoint to retrieve promotion codes (one or all based on purpose)
-app.get('/api/promotionCode/get/oneAll', async (req, res) => {
-  const { promotionCode, purpose } = req.body;
+app.get('/api/promotionCode/get/oneAll/:promotionCode/:purpose', async (req, res) => {
+  const { promotionCode, purpose } = req.params;
 
   // Validate the request body
   const schema = Joi.object({
@@ -3349,9 +3345,9 @@ app.delete('/api/campaign/delete/oneAll', async (req, res) => {
 });
 
 // Handle the GET request to retrieve campaign(s)
-app.get('/api/campaign/get/oneAll', async (req, res) => { 
-  // Extract campaignName and purpose from the request body
-  const { campaignName, purpose } = req.body;
+app.get('/api/campaign/get/oneAll/:campaignName/:purpose', async (req, res) => { 
+// Extract campaignName and purpose from the request body
+  const { campaignName, purpose } = req.params;
 
   // Validate the request body using Joi
   const schema = Joi.object({
