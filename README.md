@@ -2,7 +2,7 @@
 
 ## Description
 This project is an e-commerce API designed to facilitate managing products, categories, and orders for an online store. It provides a robust and scalable backend solution for e-commerce applications.
-
+---
 ## Features
 - User Authentication: Secure sign-up, login, and logout functionalities.
 - Product Management: Create, read, update, and delete products.
